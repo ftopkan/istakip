@@ -1,0 +1,125 @@
+﻿@model Project.UI.Models.ProfileVm
+@{
+    if (User.IsInRole("Admin"))
+    {
+        ViewBag.Title = "Profile";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Profile";
+        Layout = "~/Views/Shared/_PersonnelLayout.cshtml";
+    }
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="~/Content/css/profile.css" rel="stylesheet" />
+<!------ Include the above in your HEAD tag ---------->
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        @Model.User.FirstName.ToUpper() @Model.User.LastName.ToUpper()
+                    </h5>
+                    <h6>
+                        @Model.User.Title
+                    </h6>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kişisel Bilgiler</a>
+                        </li>
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Performans Bilgileri</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="@Url.Action("EditProfile","Account", new { userId=Model.User.Id})" class="btn btn-warning btn"><i class="fa fa-edit"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Ad Soyad</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.User.FirstName.ToUpper() @Model.User.LastName.ToUpper()</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.User.Email</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Telefon Numarası</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.User.PhoneNumber</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Ünvan</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.User.Title</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Alınan Görev Sayısı</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.AllDemands</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tamamlanan Görev Sayısı</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.CompletedDemands</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Tamamlanamayan Görev Sayısı</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.UncompletedDemands</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

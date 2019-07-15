@@ -1,0 +1,53 @@
+﻿@model  IEnumerable<Project.Entities.Models.Product>
+@{
+    ViewBag.Title = "Index";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_PersonnelLayout.cshtml";
+    }
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ürünler</h6>
+    </div>
+    <div class="card-body">
+        <a href="@Url.Action("Create", "Product")" class="btn btn-primary">Ürün Ekle</a>
+        <br><br/>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ürünün Adı</th>
+                        <th>Ürünün Fiyatı</th>   
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.ProductName
+                            </td>
+                            <td>
+                              @item.ProductPrice
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit","Product",new {productId=item.ProductId})" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                <a href="@Url.Action("Delete","Product",new {productId=item.ProductId})" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

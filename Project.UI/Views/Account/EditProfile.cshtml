@@ -1,0 +1,32 @@
+﻿@model Project.Entities.Models.AppUser
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_PersonnelLayout.cshtml";
+}
+
+<div class="col-lg-7">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Personel Düzenle</h1>
+        </div>
+        @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @id = "form", @class = "user", @enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+
+            <input type="hidden" name="userId" value="@Model.Id" />
+            <div class="form-group">
+                <input type="email" class="form-control form-control-user" name="Email" value="@Model.Email" id="exampleInputEmail" placeholder="E-Posta Adresi">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user" name="PhoneNumber" value="@Model.PhoneNumber" id="exampleInputPhoneNumber" placeholder="Telefon Numarası">
+            </div>
+            <button type="submit" class="btn btn-success btn-user btn-block">
+                Kaydet
+            </button>
+            <hr>
+        }
+    </div>
+</div>
+
+
+

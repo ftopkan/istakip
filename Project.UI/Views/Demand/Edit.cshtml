@@ -1,0 +1,57 @@
+﻿@model Project.Entities.Models.Demand
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="offset-md-2 col-lg-7">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Talebi Düzenle</h1>
+        </div>
+        @using (Html.BeginForm("Edit", "Demand", FormMethod.Post, new { @id = "form", @class = "user", @enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+
+            <input type="hidden" name="demandId" value="@Model.CreateDemandId" />
+            <div class="form-group row">
+                <div class="offset-md-1 col-md-10 ">
+                    <input type="text" class="form-control " name="Title" value="@Model.Title" id="exampleFirstName" placeholder="Başlık">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-md-1 col-md-10 ">
+
+                    <textarea class="form-control" name="Description" id="exampleFormControlTextarea3" rows="4">@Model.Description</textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-md-1 col-md-10 ">
+                    <select class="form-control " name="UserId">
+                        <option class="form-control">Personel Seç</option>
+                        @foreach (var item in ViewBag.UserList)
+                        {
+                            if (Model.UserId == item.Id)
+                            {
+                                <option class="form-control" value="@item.Id" selected>@item.FirstName @item.LastName</option>
+                            }
+                            else
+                            {
+                                <option class="form-control" value="@item.Id">@item.FirstName @item.LastName</option>
+                            }
+
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="offset-md-3 col-md-6 ">
+                <button type="submit" class="btn btn-success btn-user btn-block">
+                    Kaydet
+                </button>
+            </div>
+            <hr>
+        }
+    </div>
+</div>
+
+

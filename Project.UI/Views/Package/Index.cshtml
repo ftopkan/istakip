@@ -1,0 +1,53 @@
+﻿@model List<Project.Entities.Models.Package>
+@{
+    ViewBag.Title = "Index";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_PersonnelLayout.cshtml";
+    }
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Paketler</h6>
+    </div>
+    <div class="card-body">
+        <a href="@Url.Action("CreatePackage", "Package")" class="btn btn-primary">Paket Ekle</a>
+        <br><br />
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Paketin Adı</th>
+                        <th>Paketin Fiyatı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.PackageName
+                            </td>
+                            <td>
+                                @item.PackagePrice
+                            </td>
+                            <td>                              
+                                <a href="@Url.Action("DeletePackage","Package",new {packageId=item.PackageId})" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

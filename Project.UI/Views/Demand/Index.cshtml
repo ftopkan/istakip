@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Project.Entities.Models.Demand>
+@{
+    if (User.IsInRole("User"))
+    {
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_PersonnelLayout.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Talepler</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Başlık</th>
+                        <th>Açıklama</th>
+                        <th>Durumu</th>
+                        <th>Talebi Alan</th>
+                       <th>Talep Bitiriş Tarihi</th>
+                        <th>Mesaj</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td> @item.Title</td>
+                        <td> @item.Description</td>
+                        @if (item.User != null)
+                        {
+                            <td> @item.User.FirstName @item.User.LastName</td>
+                        }
+                        else
+                        {
+                            <td style="text-align:center">-</td>
+                        }
+                        @if (item.ResultDemand == null)
+                        {
+                            <td style="text-align:center">-</td>
+
+                            <td style="text-align:center">-</td>
+                            <td style="text-align:center">-</td>
+                        }
+                        else
+                        {
+
+
+                            <td>
+                                @if (item.ResultDemand.isFinished)
+                                {
+                                    <b>Tamamlandı</b>
+                                }
+                                else
+                                {
+                                    <b>Tamamlanamadı</b>
+                                }
+                            </td>
+                            <td>@item.ResultDemand.EndDate</td>
+                            <td>@item.ResultDemand.Message</td>
+                        }
+                        <td style="min-width:100px;">
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("Edit","Demand", new { demandId=item.CreateDemandId})" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="@Url.Action("Delete","Demand", new { demandId=item.CreateDemandId})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                            }
+                            else if (User.IsInRole("User"))
+                            {
+                                if (item.User == null)
+                                {
+                                    <a href="@Url.Action("TakeDemand","User", new { demandId=item.CreateDemandId})" class="btn btn-primary btn-sm"><i class="fas fa-handshake"> Talebi Al </i></a>
+                                }
+                            }
+
+                        </td>
+
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

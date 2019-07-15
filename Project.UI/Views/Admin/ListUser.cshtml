@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Project.Entities.Models.AppUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Personel Tablosu</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Kullanıcı Adı</th>
+                        <th>Tel No</th>
+                        <th>Email</th>
+                        <th>Ünvan</th>     
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td> @item.FirstName</td>
+                            <td> @item.LastName</td>
+                            <td> @item.UserName</td>
+                            <td> @item.PhoneNumber</td>
+                            <td> @item.Email</td>
+                            <td> @item.Title</td>
+                            <td>
+                                <a href="@Url.Action("GetDemandByUserId","Demand", new { userId=item.Id})" class="btn btn-success btn-sm" title="Personele ait talepleri gör"><i class="fa fa-tasks"></i></a>
+                                <a href="@Url.Action("EditUser","Admin", new { userId=item.Id})" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="@Url.Action("DeleteUser","Admin", new { userId=item.Id})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+
+                            </td>
+
+                        </tr>
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

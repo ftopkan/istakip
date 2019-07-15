@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Project.Entities.Models.Order>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ürünler</h6>
+    </div>
+    <div class="card-body">
+        <a href="@Url.Action("Create", "Order")" class="btn btn-primary">Sipariş Ekle</a>
+        <br><br />
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Paket Adı</th>
+                        <th>Müşteri Adı</th>
+                        <th>Müşteri Adresi</th>
+                        <th>Müşteri TelNo</th>
+                        <th>Paket Fiyatı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @item.Package.PackageName
+                        </td>
+                        <td>
+                            @item.FullName
+                        </td>
+                        <td>
+                            @item.Adress
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            @item.Package.PackagePrice
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit","Order",new {orderId=item.OrderId})" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                            <a href="@Url.Action("Delete","Order",new {orderId=item.OrderId})" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+
+                        </td>
+
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
